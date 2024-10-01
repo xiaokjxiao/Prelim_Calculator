@@ -1,4 +1,4 @@
-const display = document.querySelector(".display");
+const display = document.querySelector(".display")
 const buttons = document.querySelectorAll("button");
 const specialChars = ["%", "×", "/", "-", "+"];
 const hellos = ["Hello", "Hola", "Bonjour", "Hallo", "Ciao", "こんにちは", "안녕하세요", "你好", "Привет", "Olá"];
@@ -96,7 +96,9 @@ const handleHello = () => {
 
 const handleGoodbye = () => {
   display.value = "Goodbye"; // Display Goodbye message
-  turnOffCalculator(); // Turn off calculator
+  setTimeout(() => {
+    turnOffCalculator(); // Turn off the calculator after displaying the message
+  }, 1000); // Delay for 1 second before turning off
 };
 
 const handleEquals = () => {
@@ -142,7 +144,7 @@ buttons.forEach((button) => {
     if (value === "hello") {
       handleHello();
     } else if (value === "bye") {
-      handleGoodbye();
+      handleGoodbye(); // Call the updated handleGoodbye function
     } else if (specialChars.includes(value)) {
       handleOperator(value);
     } else if (value === "AC") {
