@@ -17,7 +17,7 @@ const clearAll = () => {
 
 const handleDelete = () => {
   if (currentNumber.length > 0) {
-    currentNumber = currentNumber.toString.slice(0, -1); // Remove the last character (either number or operator)
+    currentNumber = currentNumber.toString.slice(0, -1); 
   } else if (currentNumber[currentNumber.length - 1] === specialChars);
     currentNumber = currentNumber.toString.slice(0, -1);
     updateDisplay();
@@ -31,7 +31,7 @@ const handleNumber = (number) => {
   updateDisplay();
 };
 
-const handleOperator = (op) => {              //change operators for
+const handleOperator = (op) => {              //change operators for aesthetic purposes
   if (!isOn || currentNumber === "") return;
   if (op === "%") {
     currentNumber = (parseFloat(currentNumber) / 100).toString();
