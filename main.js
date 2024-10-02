@@ -1,6 +1,6 @@
 const display = document.querySelector(".display");
 const buttons = document.querySelectorAll("button");
-const specialChars = ["%", "×", "/", "-", "+"];
+const specialChars = ["%", "*", "/", "-", "+"];
 const hellos = ["Hello", "Hola", "Bonjour", "Hallo", "Ciao", "こんにちは", "안녕하세요", "你好", "Привет", "Olá"];
 
 let currentNumber = ""; 
@@ -16,12 +16,9 @@ const clearAll = () => {
 };
 
 const handleDelete = () => {
-  if (currentNumber.length > 0) {
-    currentNumber = currentNumber.toString.slice(0, -1); 
-  } else if (currentNumber[currentNumber.length - 1] === specialChars);
-    currentNumber = currentNumber.toString.slice(0, -1);
-    updateDisplay();
-  };
+  currentNumber = currentNumber.slice(0, -1);
+  updateDisplay();
+};
 
 const handleNumber = (number) => {
   if (!isOn) return;
@@ -31,12 +28,11 @@ const handleNumber = (number) => {
   updateDisplay();
 };
 
-const handleOperator = (op) => {              //change operators for aesthetic purposes
+const handleOperator = (op) => {
   if (!isOn || currentNumber === "") return;
+
   if (op === "%") {
     currentNumber = (parseFloat(currentNumber) / 100).toString();
-  } else if (op === "×") {
-    currentNumber += "*"; 
   } else {
     currentNumber += op;
   }
