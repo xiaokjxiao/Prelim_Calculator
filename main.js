@@ -1,158 +1,115 @@
-const display = document.querySelector(".display")
+const display = document.querySelector(".display");
 const buttons = document.querySelectorAll("button");
 const specialChars = ["%", "×", "/", "-", "+"];
 const hellos = ["Hello", "Hola", "Bonjour", "Hallo", "Ciao", "こんにちは", "안녕하세요", "你好", "Привет", "Olá"];
 
-let currentNumber = ""; // Track the current number being entered
-let previousNumber = null; // Store the previous number for calculations
-let operation = null; // Keep track of the pending operation
-let isOn = true; // Track if the calculator is on or off
+let currentNumber = ""; 
+let isOn = true;
 
 const updateDisplay = () => {
-  if (operation && previousNumber !== null) {
-    display.value = `${previousNumber} ${operation} ${currentNumber}`; // Show the equation
-  } else {
-    display.value = currentNumber || "0"; // Display 0 if currentNumber is empty
-  }
+  display.value = currentNumber || "0";
 };
 
 const clearAll = () => {
   currentNumber = "";
-  previousNumber = null;
-  operation = null;
   updateDisplay();
 };
 
 const handleDelete = () => {
-  if (currentNumber) {
-    currentNumber = currentNumber.slice(0, -1); // Remove the last character
+  if (currentNumber.length > 0) {
+    currentNumber = currentNumber.toString.slice(0, -1); // Remove the last character (either number or operator)
+  } else if (currentNumber[currentNumber.length - 1] === specialChars);
+    currentNumber = currentNumber.toString.slice(0, -1);
     updateDisplay();
-  }
-};
+  };
 
 const handleNumber = (number) => {
-  if (!isOn) return; // Prevent input if calculator is off
-  if (number === "." && currentNumber.includes(".")) return; // Prevent multiple decimals
+  if (!isOn) return;
+  if (currentNumber.length >= 10) return;
+  if (number === "." && currentNumber.includes(".")) return;
   currentNumber += number;
   updateDisplay();
 };
 
-const handleOperator = (op) => {
-  if (!isOn || currentNumber === "") return; // Prevent operator at the beginning or when calculator is off
-
-  if (previousNumber === null) {
-    previousNumber = parseFloat(currentNumber); // Convert to a number
+const handleOperator = (op) => {              //change operators for
+  if (!isOn || currentNumber === "") return;
+  if (op === "%") {
+    currentNumber = (parseFloat(currentNumber) / 100).toString();
+  } else if (op === "×") {
+    currentNumber += "*"; 
   } else {
-    calculate(); // Perform the previous operation if a number is already present
+    currentNumber += op;
   }
-  operation = op;
-  currentNumber = ""; // Reset current number for next operand
-  updateDisplay(); // Update display to show the equation
+  updateDisplay();
 };
 
 const calculate = () => {
-  if (previousNumber === null || operation === null || currentNumber === "") {
-    return; // Handle incomplete calculations
+  if (!isOn || currentNumber === "") return;
+  try {
+    currentNumber = eval(currentNumber).toString();
+  } catch {
+    currentNumber = "Error";
   }
-
-  const current = parseFloat(currentNumber);
-
-  let result;
-  switch (operation) {
-    case "+":
-      result = previousNumber + current;
-      break;
-    case "-":
-      result = previousNumber - current;
-      break;
-    case "×":
-      result = previousNumber * current;
-      break;
-    case "/":
-      if (current === 0) {
-        alert("Error: Division by zero");
-        return; // Prevent division by zero error
-      }
-      result = previousNumber / current;
-      break;
-    case "%":
-      result = previousNumber * (current / 100);
-      break;
-    default:
-      return; // Handle unexpected operations
-  }
-
-  previousNumber = result;
-  currentNumber = result.toString(); // Convert result back to string
-  operation = null;
-  updateDisplay(); // Update display
+  updateDisplay();
 };
 
 const handleHello = () => {
-  if (!isOn) return; // Prevent "hello" messages if calculator is off
+  if (!isOn) return;
   const randomIndex = Math.floor(Math.random() * hellos.length);
+  clearAll();
   display.value = hellos[randomIndex];
 };
 
 const handleGoodbye = () => {
-  display.value = "Goodbye"; // Display Goodbye message
+  display.value = "Good Bye!";
+  disableButtons();
   setTimeout(() => {
-    turnOffCalculator(); // Turn off the calculator after displaying the message
-  }, 1000); // Delay for 1 second before turning off
+    turnOffCalculator();
+  }, 1000);
 };
 
-const handleEquals = () => {
-  if (!isOn) return; // Prevent calculations if calculator is off
-  calculate();
-};
-
-// Turn off the calculator
 const turnOffCalculator = () => {
   isOn = false;
   disableButtons();
-  display.value = ""; // Clear the display when off
+  display.value = "";
 };
 
-// Turn on the calculator
 const turnOnCalculator = () => {
   isOn = true;
   enableButtons();
-  clearAll(); // Reset the calculator when turning on
+  clearAll();
 };
 
-// Disable all buttons except for AC
 const disableButtons = () => {
   buttons.forEach((button) => {
     if (button.dataset.value !== "AC") {
-      button.disabled = true; // Disable all buttons except AC
+      button.disabled = true;
     }
   });
 };
 
-// Enable all buttons
 const enableButtons = () => {
   buttons.forEach((button) => {
-    button.disabled = false; // Enable all buttons
+    button.disabled = false;
   });
 };
 
-// Add event listeners to buttons
 buttons.forEach((button) => {
   button.addEventListener("click", () => {
-    const value = button.dataset.value; // Use data-value instead of textContent
+    const value = button.dataset.value;
 
     if (value === "hello") {
       handleHello();
     } else if (value === "bye") {
-      handleGoodbye(); // Call the updated handleGoodbye function
+      handleGoodbye();
     } else if (specialChars.includes(value)) {
       handleOperator(value);
     } else if (value === "AC") {
-      turnOnCalculator(); // Turn on calculator with AC
+      turnOnCalculator();
     } else if (value === "DEL") {
       handleDelete();
     } else if (value === "=") {
-      handleEquals();
+      calculate();
     } else {
       handleNumber(value);
     }
