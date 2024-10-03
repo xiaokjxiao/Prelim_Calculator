@@ -1,105 +1,102 @@
-@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap");
 * {
-    margin: 0;
-    padding: 0;
-    font-family: "Chakra Petch", system-ui;
-    box-sizing: border-box;
-    
+  margin: 0;
+  padding: 0;
+  font-family: "Chakra Petch", system-ui;
+  box-sizing: border-box;
 }
 
 body {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #EEEEEE;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #eeeeee;
 }
 
 .container {
-    max-width: 350px;
-    width: 100%;
-    padding: 20px;
-    border-radius: 12px;
-    background: white;
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+  max-width: 350px;
+  width: 100%;
+  padding: 20px;
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
 }
 
 .display {
-    height: 80px;
-    width: 100%;
-    text-align: right;
-    margin-bottom: 20px;
-    font-size: 40px;
-    border: none;
-    outline: none;
-    background-color: #F6F6F6; 
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
-    pointer-events: none;
+  height: 80px;
+  width: 100%;
+  text-align: right;
+  margin-bottom: 20px;
+  font-size: 40px;
+  border: none;
+  outline: none;
+  background-color: #f6f6f6;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+  pointer-events: none;
 }
 
 .buttons {
-    display: grid;
-    grid-gap: 10px;
-    grid-template-columns: repeat(4, 1fr);
-    
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(4, 1fr);
 }
 
 .buttons button {
-    padding: 15px;
-    font-size: 20px;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.2s, transform 0.1s ease;
+  padding: 15px;
+  font-size: 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s ease;
 }
 
 .buttons button:not(.operator) {
-    background-color: #FFE2E2;
-    color: #393E46;
+  background-color: #ffe2e2;
+  color: #393e46;
 }
 
 .buttons button:not(.operator):hover {
-    background-color: #FFC7C7;
+  background-color: #ffc7c7;
 }
 
 .operator {
-    background-color: #8785A2;
-    color: #F6F6F6;
+  background-color: #8785a2;
+  color: #f6f6f6;
 }
 
 .operator:hover {
-    background-color: #67638b;
+  background-color: #67638b;
 }
 
 button[data-value="AC"],
 button[data-value="DEL"] {
-    background-color: #FFC7C7;
-    color: #393E46;
+  background-color: #ffc7c7;
+  color: #393e46;
 }
 
 button[data-value="AC"]:hover,
 button[data-value="DEL"]:hover {
-    background-color: #FFB6B6;
+  background-color: #ffb6b6;
 }
 
 button[data-value="="] {
-    background-color: #8785A2;
-    color: white;
+  background-color: #8785a2;
+  color: white;
 }
 
 button[data-value="="]:hover {
-    background-color: #67638b;
+  background-color: #67638b;
 }
 
-
 .buttons button:active {
-    transform: translateY(2px);
-    box-shadow: none;
+  transform: translateY(2px);
+  box-shadow: none;
 }
 
 .hello,
 .bye {
-    grid-column: span 2; 
+  grid-column: span 2;
 }

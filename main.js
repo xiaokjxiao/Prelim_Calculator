@@ -1,9 +1,21 @@
 const display = document.querySelector(".display");
 const buttons = document.querySelectorAll("button");
 const specialChars = ["%", "*", "/", "-", "+"];
-const hellos = ["Hello", "Hola", "Bonjour", "Hallo", "Ciao", "こんにちは", "안녕하세요", "你好", "Привет", "Olá", "Kamusta"];
+const hellos = [
+  "Hello",
+  "Hola",
+  "Bonjour",
+  "Hallo",
+  "Ciao",
+  "こんにちは",
+  "안녕하세요",
+  "你好",
+  "Привет",
+  "Olá",
+  "Kamusta",
+];
 
-let currentNumber = ""; 
+let currentNumber = "";
 let isOn = true;
 
 const updateDisplay = () => {
@@ -31,13 +43,12 @@ const handleNumber = (number) => {
 const handleOperator = (op) => {
   if (!isOn || currentNumber === "") return;
   const lastChar = currentNumber[currentNumber.length - 1];
-  
 
   if (specialChars.includes(lastChar)) {
-    if ((op === "-" && lastChar !== "-") || op === "+" && lastChar !== "+"){
-      currentNumber += op;  // checks if lastcharacter is negative and a "-" and "+", if yes then it allows to equate a positive and negative integer
+    if ((op === "-" && lastChar !== "-") || (op === "+" && lastChar !== "+")) {
+      currentNumber += op; // checks if last character is "-" and "+", if yes then it allows to equate a positive and negative integer
     } else {
-      currentNumber = currentNumber.slice(0, -1) + op;  // if not it replaces
+      currentNumber = currentNumber.slice(0, -1) + op; // if not it replaces
     }
   } else {
     currentNumber += op;
