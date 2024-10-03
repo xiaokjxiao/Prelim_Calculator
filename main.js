@@ -1,7 +1,7 @@
 const display = document.querySelector(".display");
 const buttons = document.querySelectorAll("button");
 const specialChars = ["%", "*", "/", "-", "+"];
-const hellos = ["Hello", "Hola", "Bonjour", "Hallo", "Ciao", "こんにちは", "안녕하세요", "你好", "Привет", "Olá"];
+const hellos = ["Hello", "Hola", "Bonjour", "Hallo", "Ciao", "こんにちは", "안녕하세요", "你好", "Привет", "Olá", "Kamusta"];
 
 let currentNumber = ""; 
 let isOn = true;
@@ -16,33 +16,44 @@ const clearAll = () => {
 };
 
 const handleDelete = () => {
-  currentNumber = currentNumber.slice(0, -1);
+  currentNumber = currentNumber.slice(0, -1); //clears the last character
   updateDisplay();
 };
 
 const handleNumber = (number) => {
   if (!isOn) return;
-  if (currentNumber.length >= 10) return;
-  if (number === "." && currentNumber.includes(".")) return;
+  if (currentNumber.length >= 10) return; // 10 charac only
+  if (number === "." && currentNumber.includes(".")) return; // avoid many decimal
   currentNumber += number;
   updateDisplay();
 };
 
 const handleOperator = (op) => {
   if (!isOn || currentNumber === "") return;
+  const lastChar = currentNumber[currentNumber.length - 1];
+  
 
-  if (op === "%") {
-    currentNumber = (parseFloat(currentNumber) / 100).toString();
+  if (specialChars.includes(lastChar)) {
+    if ((op === "-" && lastChar !== "-") || op === "+" && lastChar !== "+"){
+      currentNumber += op;  // checks if lastcharacter is negative and a "-" and "+", if yes then it allows to equate a positive and negative integer
+    } else {
+      currentNumber = currentNumber.slice(0, -1) + op;  // if not it replaces
+    }
   } else {
     currentNumber += op;
   }
+
   updateDisplay();
 };
 
 const calculate = () => {
   if (!isOn || currentNumber === "") return;
   try {
-    currentNumber = eval(currentNumber).toString();
+    if (currentNumber.includes("/0") || currentNumber.includes("%0")) {
+      currentNumber = "Error"; // error
+    } else {
+      currentNumber = eval(currentNumber).toString();
+    }
   } catch {
     currentNumber = "Error";
   }
@@ -52,13 +63,13 @@ const calculate = () => {
 const handleHello = () => {
   if (!isOn) return;
   const randomIndex = Math.floor(Math.random() * hellos.length);
-  clearAll();
+  clearAll(); // clears all numbers when hello is pressed
   display.value = hellos[randomIndex];
 };
 
 const handleGoodbye = () => {
   display.value = "Good Bye!";
-  disableButtons();
+  disableButtons(); //disable buttons when displaying goodbye
   setTimeout(() => {
     turnOffCalculator();
   }, 1000);
